@@ -1,0 +1,103 @@
+﻿@model List<Store.ViewModels.Home.BasketViewModel>
+
+@{
+    ViewBag.Title = "Basket";
+}
+<div id="content" class="col-sm-12">
+    <h1 class="title">سبد خرید</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="text-center">تصویر</td>
+                    <td class="text-left">نام محصول</td>
+                    <td class="text-left">گروه محصول</td>
+                    <td class="text-left">تعداد</td>
+                    <td class="text-right">قیمت واحد</td>
+                    <td class="text-right">کل</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <a href="~/Products/@item.Product.Url">
+                                @Html.ImageFor(ModeItem => item.Product.Image, new { width = "80" }, "no_image", "Files", "UploadImage")
+                            </a>
+                        </td>
+                        <td class="text-left">
+                            <a href="~/Products/@item.Product.Url">@item.Product.Name</a><br />
+                            <small>امتیازات خرید: @item.Product.Like</small>
+                        </td>
+                        <td class="text-left">@item.Product.Group.Name</td>
+                        <td class="text-left">
+                            <div class="input-group btn-block quantity">
+                                <input type="text" name="quantity" product="@item.Product.Id" value="@item.Count" size="1" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" data-toggle="tooltip" title="حذف" class="btn btn-danger" product="@item.Product.Id"><i class="fa fa-times-circle"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="text-right">@item.Product.Price.ToPrice() تومان</td>
+
+                        <td class="text-right">@item.TotalPrice.ToPrice() تومان</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="buttons">
+        <div class="pull-left"><a href="~/Home/index" class="btn btn-default">ادامه خرید</a></div>
+        <div class="pull-right"><a href="~/Home/Buy" class="btn btn-primary">تسویه حساب</a></div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Scripts/AutoNumeric/jquery-price.js"></script>
+    <script>
+        $(function () {
+            $("input.form-control").price()
+            $("input.form-control").change(function () {
+                var productId = $(this).attr("product");
+                var count = $(this).val();
+                $.ajax({
+                    url: "/Home/AddToCart",
+                    data: { Id: productId, Count: count },
+                    type: "Post",
+                    dataType: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            $("#CartItems").html(result.Html);
+                            location.reload();
+                        }
+                        eval(result.Script);
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            });
+
+            $("button.btn.btn-danger").click(function () {
+                var productId = $(this).attr("product");
+                var btn = $(this);
+                $.ajax({
+                    url: "/Home/RemoveCart",
+                    data: { Id: productId },
+                    type: "Post",
+                    dataType: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            $("#CartItems").html(result.Html);
+                            btn.parent().parent().parent().parent().hide();
+                        }
+                        eval(result.Script);
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            });
+        });
+    </script>
+}

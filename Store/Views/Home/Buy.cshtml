@@ -1,0 +1,96 @@
+﻿@model Store.Models.DomainModels.Factor
+
+@{
+    ViewBag.Title = "Buy";
+}
+
+<div id="content" class="col-sm-12">
+    <h3 class="title">تسویه حساب</h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-sign-in"></i> یک حساب کاربری ساخته و یا به حساب خود وارد شوید</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="register" name="account">
+                            ثبت نام حساب کاربری
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" checked="checked" value="guest" name="account">
+                            تسویه حساب مهمان
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" value="returning" name="account">
+                            مشتری قبلی
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Ajax.BeginForm("Buy", "Home", new AjaxOptions { HttpMethod = "Post", Url = "Home/Buy" }))
+         {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><i class="fa fa-user"></i> اطلاعات شخصی شما</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <fieldset id="account">
+                                        <div class="form-group required">
+                                            <label for="input-payment-firstname" class="control-label">نام و نام خانوادگی </label>
+                                            <input type="text" class="form-control" id="input-payment-firstname" placeholder=" نام و نام خانوادگی" value="" name="Name">
+                                            @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:orange" })
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="input-payment-lastname" class="control-label">موبایل</label>
+                                            <input type="text" class="form-control" id="input-payment-lastname" placeholder="موبایل" value="" name="Mobile">
+                                            @Html.ValidationMessageFor(model => model.Mobile, null, new { style = "color:orange" })
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="input-payment-email" class="control-label">آدرس ایمیل</label>
+                                            <input type="text" class="form-control" id="input-payment-email" placeholder="آدرس ایمیل" value="" name="Email">
+                                            @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:orange" })
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="input-payment-email" class="control-label">کد پستی</label>
+                                            <input type="text" class="form-control" id="input-payment-email" placeholder="آدرس ایمیل" value="" name="PostalCode">
+                                            @Html.ValidationMessageFor(model => model.PostalCode, null, new { style = "color:orange" })
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="input-firstname" class="col-sm-2 control-label">آدرس</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="4" class="form-control" id="confirm_comment" name="Address"></textarea>
+                                                @Html.ValidationMessageFor(model => model.Address, null, new { style = "color:orange" })
+                                            </div>
+                                        </div>
+                                        <div class="buttons">
+                                            <div class="pull-right">
+                                                <input type="submit" class="btn btn-primary" id="button-confirm" value="تایید سفارش">
+                                            </div>
+                                            <div class="label-warning" style="text-align:center">
+                                                @ViewBag.Message
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

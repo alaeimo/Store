@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="StoreDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FactorItems" EntityType="StoreDBModel.FactorItem" />
+    <EntitySet Name="Factors" EntityType="StoreDBModel.Factor" />
+    <EntitySet Name="Groups" EntityType="StoreDBModel.Group" />
+    <EntitySet Name="Messages" EntityType="StoreDBModel.Message" />
+    <EntitySet Name="Products" EntityType="StoreDBModel.Product" />
+    <EntitySet Name="Settings" EntityType="StoreDBModel.Setting" />
+    <EntitySet Name="Users" EntityType="StoreDBModel.User" />
+    <AssociationSet Name="FK_FactorItems_Factors" Association="StoreDBModel.FK_FactorItems_Factors">
+      <End Role="Factor" EntitySet="Factors" />
+      <End Role="FactorItem" EntitySet="FactorItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FactorItems_Products" Association="StoreDBModel.FK_FactorItems_Products">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="FactorItem" EntitySet="FactorItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factors_ToUsers" Association="StoreDBModel.FK_Factors_ToUsers">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Factor" EntitySet="Factors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Groups_Groups" Association="StoreDBModel.FK_Groups_Groups">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Group1" EntitySet="Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Groups" Association="StoreDBModel.FK_Products_Groups">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_ToTable" Association="StoreDBModel.FK_Messages_ToTable">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FactorItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FactorId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Qty" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="Factor" Relationship="StoreDBModel.FK_FactorItems_Factors" FromRole="FactorItem" ToRole="Factor" />
+    <NavigationProperty Name="Product" Relationship="StoreDBModel.FK_FactorItems_Products" FromRole="FactorItem" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Factor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BuyDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TrackingCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="isFinish" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="FactorItems" Relationship="StoreDBModel.FK_FactorItems_Factors" FromRole="Factor" ToRole="FactorItem" />
+    <NavigationProperty Name="User" Relationship="StoreDBModel.FK_Factors_ToUsers" FromRole="Factor" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ParentId" Type="Int32" />
+    <NavigationProperty Name="Groups1" Relationship="StoreDBModel.FK_Groups_Groups" FromRole="Group" ToRole="Group1" />
+    <NavigationProperty Name="Group1" Relationship="StoreDBModel.FK_Groups_Groups" FromRole="Group1" ToRole="Group" />
+    <NavigationProperty Name="Products" Relationship="StoreDBModel.FK_Products_Groups" FromRole="Group" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsRead" Type="Boolean" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="StoreDBModel.FK_Messages_ToTable" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GroupId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+    <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Keywords" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Tags" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Like" Type="Int32" Nullable="false" />
+    <Property Name="Dislike" Type="Int32" Nullable="false" />
+    <Property Name="Enable" Type="Boolean" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Summery" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FactorItems" Relationship="StoreDBModel.FK_FactorItems_Products" FromRole="Product" ToRole="FactorItem" />
+    <NavigationProperty Name="Group" Relationship="StoreDBModel.FK_Products_Groups" FromRole="Product" ToRole="Group" />
+  </EntityType>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContactUs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AboutUs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Help" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Keywords" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SmtpServer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailSenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Picture1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Picture2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Picture3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Picture4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Picture5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tell" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="Byte" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Factors" Relationship="StoreDBModel.FK_Factors_ToUsers" FromRole="User" ToRole="Factor" />
+    <NavigationProperty Name="Messages" Relationship="StoreDBModel.FK_Messages_ToTable" FromRole="User" ToRole="Message" />
+  </EntityType>
+  <Association Name="FK_FactorItems_Factors">
+    <End Type="StoreDBModel.Factor" Role="Factor" Multiplicity="1" />
+    <End Type="StoreDBModel.FactorItem" Role="FactorItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FactorItem">
+        <PropertyRef Name="FactorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FactorItems_Products">
+    <End Type="StoreDBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="StoreDBModel.FactorItem" Role="FactorItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FactorItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factors_ToUsers">
+    <End Type="StoreDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="StoreDBModel.Factor" Role="Factor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Factor">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Groups_Groups">
+    <End Type="StoreDBModel.Group" Role="Group" Multiplicity="0..1" />
+    <End Type="StoreDBModel.Group" Role="Group1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Group1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Groups">
+    <End Type="StoreDBModel.Group" Role="Group" Multiplicity="1" />
+    <End Type="StoreDBModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_ToTable">
+    <End Type="StoreDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="StoreDBModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

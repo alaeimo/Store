@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Store.Models.DomainModels.Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: right;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e2eae8;
+    }
+
+    th {
+        background-color: #ffa570;
+        color: white;
+    }
+</style>
+<h2 class="block-header">لیست محصولات</h2>
+
+<div class="block-header">
+    <div class="breadcrumb">
+        <a href="/Home/Index">صفحه اصلی</a><span>›</span><a href="/Admin/Products">مدیریت محصولات</a>
+    </div>
+</div>
+<div class="fullscreen-container">
+    <div class="block green">
+        @using (Html.BeginForm("AddGroup", "Admin", FormMethod.Post, new { id = "myForm" }))
+        {
+            
+            <div class="separator"></div>
+            <div class="block-standart">
+                <div class="form inline">
+                    <div class="group">
+                        @Html.ActionLink("افزودن محصول جدید", "AddProduct", "Admin", null, new { @class = "button" })
+                    </div>
+                    <br/>
+                    <div class="label-success" style="text-align:center">
+                        @ViewBag.Success
+                    </div>
+                    <div class="label-warning" style="text-align:center">
+                        @ViewBag.Error
+                    </div>
+                    <div class="label-warning" style="text-align:center">
+                        @ViewBag.Warning
+                    </div>
+                    <div class="group">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Image)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.GroupId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Price)
+                                </th>
+                                <th>
+                                    عملیات
+                                </th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                       @Html.ImageFor(ModeItem => item.Image, new { width = "100" }, "no_image", "Files", "UploadImage")
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Group.Name)
+                                    </td>
+                                    <td>
+                                        @item.Price.ToString().Trim('0').Trim('.') تومان
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("ویرایش", "EditProduct", new { id = item.Id }) |
+                                        @Html.ActionLink("حذف", "DeleteProduct", new { id = item.Id }, new { onclick = "return confirm('جهت حذف مطمئن هستید ؟')" })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

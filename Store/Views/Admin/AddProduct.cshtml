@@ -1,0 +1,198 @@
+﻿@model Store.ViewModels.Admin.AddProductViewModel
+
+@{
+    ViewBag.Title = "AddProduct";
+}
+@helper Addoption(int? parentId)
+{
+    foreach (var item in Model.Groups.Where(p => p.ParentId == parentId).ToList())
+    {
+        <li>
+            <a name="@item.Name" id=@item.Id onclick="myFunction(this.id,this.name)">
+                @item.Name
+            </a>
+            <span class="down"></span>
+            <ul>
+                @Addoption(item.Id)
+            </ul>
+        </li>
+    }
+}
+
+<aside id="column-left" class="col-sm-3 hidden-xs">
+    <h3 class="subtitle">دسته ها</h3>
+    <div class="box-category">
+        <ul id="cat_accordion">
+            @Addoption(null)
+        </ul>
+    </div>
+</aside>
+
+@using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "myUploadForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <form class="form-horizontal">
+
+        <fieldset id="account">
+
+            <legend>مدیریت محصولات</legend>
+            <div style="display:normal;" class="form-group">
+                <label class="col-sm-2 control-label">افزودن کالای جدید</label>
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">گروه </label>
+                <div class="col-sm-3">
+                    <input class="form-control" id="Product_GroupId" placeholder="گروه مورد نظر را انتخاب کنید" value="" name="GroupId">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.GroupId, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">نام </label>
+                <div class="col-sm-3">
+                    <input class="form-control" id="Product_Name" placeholder=" نام کالا را وارد کنید" value="" name="Name">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Name, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">قیمت </label>
+                <div class="col-sm-3">
+                    <input class="form-control" id="Product_Price" placeholder="قیمت کالا را وارد کنید" value="" name="Price" >
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Price, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">آدرس </label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="Product_Url" placeholder="آدرس کالا را وارد کنید" value="" name="Url" onclick="setURL()">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Url, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">توضیحات </label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="Product_Summery" placeholder="توضیحات کالا را وارد کنید" value="" name="Summery">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Summery, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">تگ توضیحات</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="Product_Description" placeholder="تگ توضیحات کالا را وارد کنید" value="" name="Description">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Description, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">تگ کلمات کلیدی</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Product_Keywords" placeholder="تگ کلمات کلیدی کالا را وارد کنید" value="" name="Keywords">
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Keywords, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">برچسب ها</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="Product_Tags" placeholder="تگ کلمات کلیدی کالا را وارد کنید" value="" name="Tags" />
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Tags, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">تصویر کالا</label>
+                <div class="col-sm-5">
+                    @Html.Upload("UploadImage")
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Image, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <br />
+            <div class="form-group ">
+                <label class="col-sm-2 control-label">این کالا فعال است؟</label>
+                <div class="col-sm-10">
+                    <label class="radio-inline">
+                        <input type="radio" checked="checked" value="true" name="Enable">
+                        بلی
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" value="false" name="Enable">
+                        خیر
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.Product.Enable, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <div class="separator"></div>
+            <div class="buttons">
+                <div class="pull-right">
+                    <input type="submit" class="btn btn-primary" name="btnAdd" value="ثبت">
+                </div>
+            </div>
+        </fieldset>
+        <div class="label-success" style="text-align:center">
+            @ViewBag.Success
+        </div>
+        <div class="label-warning" style="text-align:center">
+            @ViewBag.Warning
+        </div>
+        <div class="label-danger" style="text-align:center">
+            @ViewBag.Error
+        </div>
+    </form>
+}
+
+@section styles{
+    <link href="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.css")" rel="stylesheet" />
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/AjaxForm/jquery.form.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/AutoNumeric/jquery-price.js")"></script>
+    <script src="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.min.js")"></script>
+    <script>
+        $(function () {
+            $("#Product_Price").price();
+            $("#Product_Keywords").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            }).tagsinput();
+
+            $("#Product_Tags").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            }).tagsinput();
+           
+        });
+        
+    </script>
+    <script type="text/javascript">
+        function myFunction(pid, pname) {
+            document.getElementById("Product_GroupId").value = pid;
+        }
+        function setURL() {
+            var pname = document.getElementById("Product_Name").value;
+            document.getElementById("Product_Url").value = "DSP-" + pname ;
+        }
+    </script>
+}
+

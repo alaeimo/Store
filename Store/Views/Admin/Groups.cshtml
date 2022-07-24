@@ -1,0 +1,125 @@
+﻿@model Store.ViewModels.Admin.AddGroupViewModel
+
+@{
+    ViewBag.Title = "Groups";
+}
+
+
+@helper Addoption(int? parentId)
+{
+    foreach (var item in Model.Groups.Where(p => p.ParentId == parentId).ToList())
+    {
+        <li>
+            <a name="@item.Name" id=@item.Id onclick="myFunction(this.id,this.name)">
+
+                @item.Name
+
+            </a>
+            <span class="down"></span>
+            <ul>
+                @Addoption(item.Id)
+            </ul>
+        </li>
+
+
+    }
+}
+
+<aside id="column-left" class="col-sm-3 hidden-xs">
+    <h3 class="subtitle">دسته ها</h3>
+    <div class="box-category">
+        <ul id="cat_accordion">
+            @Addoption(null)
+        </ul>
+    </div>
+</aside>
+
+
+@using (Html.BeginForm("Groups", "Admin",FormMethod.Post, new  {id="GroupForm"}))
+{
+    <form class="form-horizontal">
+
+        <fieldset id="account">
+
+            <legend>مدیریت دسته ها</legend>
+            <div style="display: none;" class="form-group required">
+                <label class="col-sm-2 control-label">گروه کالا ها</label>
+            </div>
+            <div class="form-group ">
+                <label for="input-firstname" class="col-sm-2 control-label">نام دسته اصلی</label>
+                <div class="col-sm-5">
+                    <input class="form-control" id="ParentName" placeholder=" دسته والد را با کلیک بر روی نام آن انتخاب کنید" value="" name="ParentName">
+
+                </div>
+                @Html.ValidationMessageFor(model => model.Group.Name, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">آیدی دسته اصلی</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="ParentId" placeholder="آیدی دسته اصلی" value="" name="ParentId">
+                </div>
+            </div>
+            <br />
+            <div class="form-group required">
+                <label for="input-firstname" class="col-sm-2 control-label">نام دسته جدید</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Group_Id" placeholder="نام دسته های جدید را وارد کرده و اینتر بزنید" value="" name="Name">
+                </div>
+                @Html.ValidationMessageFor(model => model.Group.Name, null, new { style = "color:orange" })
+            </div>
+            <br />
+            <div class="separator"></div>
+            <div class="buttons">
+                <div class="pull-right">
+                    <input type="submit" class="btn btn-primary" name="btnAdd" value="ثبت">
+                    <input type="submit" class="btn btn-warning" name="btnDelete" value="حذف">
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="label-success" style="text-align:center">
+                @ViewBag.Success
+            </div>
+            <div class="label-warning" style="text-align:center">
+                @ViewBag.Warning
+            </div>
+            <div class="label-danger" style="text-align:center">
+                @ViewBag.Error
+            </div>
+            <div class="label-success" style="text-align:center">
+                @ViewBag.DeleteSucess
+            </div>
+            <div class="label-warning" style="text-align:center">
+                @ViewBag.DeleteWarning
+            </div>
+        </fieldset>
+       
+    </form>
+}
+@section styles{
+    <link href="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.css")" rel="stylesheet" />
+}
+
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.min.js")"></script>
+    <script>
+        $(function () {
+            $("#Group_Id").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            }).tagsinput();
+        });
+    </script>
+
+<script type="text/javascript">
+    function myFunction(pid, pname) {
+        document.getElementById("ParentId").value = pid;
+        document.getElementById("ParentName").value = pname;
+    }
+</script>
+
+}

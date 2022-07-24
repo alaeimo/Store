@@ -1,0 +1,43 @@
+﻿@model Store.Models.DomainModels.User
+
+@{
+    ViewBag.Title = "Profile";
+}
+<div id="container">
+    <div class="container">
+        <aside id="column-right" class="col-sm-9">
+            <h3 class="subtitle">حساب کاربری</h3>
+            <div class="list-group">
+                <ul class="list-item">
+                    @if (Model.Role == "Admin")
+                    {
+                    <li><a href="~/Admin/Groups">مدیریت دسته ها</a></li>
+                    <li><a href="~/Admin/Products">لیست محصولات</a></li>
+                    <li><a href="~/Admin/AddProduct">افزدون کالای جدید</a></li>
+                    <li><a href="#">تراکنش ها</a></li>
+                    <li><a href="#">پیام های دریافتی</a></li>
+                    <li><a href="~/Home/Index">بازگشت</a></li>
+                    <li><a href="~/Home/Logout">خروج</a></li>   
+                    }
+                    @if (Model.Role != "Admin")
+                    {
+                    <li><a href="#">ورود</a></li>
+                    <li><a href="#">ثبت نام</a></li>
+                    <li><a href="#">فراموشی رمز عبور</a></li>
+                    <li><a href="#">حساب کاربری</a></li>
+                    <li><a href="#">لیست آدرس ها</a></li>
+                    <li><a href="#">لیست علاقه مندی</a></li>
+                    <li><a href="#">تاریخچه سفارشات</a></li>
+                    <li><a href="#">دانلود ها</a></li>
+                    <li><a href="#">امتیازات خرید</a></li>
+                    <li><a href="#">بازگشت</a></li>
+                    <li><a href="#">تراکنش ها</a></li>
+                    <li><a href="#">خبرنامه</a></li>
+                    <li><a href="#">پرداخت های تکرار شونده</a></li>
+                    }
+                   
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div>

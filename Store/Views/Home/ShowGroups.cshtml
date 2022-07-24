@@ -1,0 +1,138 @@
+﻿@model  Store.ViewModels.Home.GroupsShowViewModel
+
+@{
+    ViewBag.Title = "ShowGroups";
+}
+
+@helper Addoption(int? parentId)
+{
+    foreach (var item in Model.Groups.Where(p => p.ParentId == parentId).ToList())
+    {
+        <li>
+            <a name="@item.Name" href="/Groups/@item.Id/@item.Name">
+                @item.Name
+            </a>
+            <span class="down"></span>
+            <ul>
+                @Addoption(item.Id)
+            </ul>
+        </li>
+    }
+}
+<div class="container">
+    <div class="row">
+        <!-- Left Part Start-->
+        <aside id="column-left" class="col-sm-3 hidden-xs">
+            <!-- دسته ها Start-->
+            <div class="box-category" style="background-color :#f5faf8">
+                <ul id="cat_accordion">
+                    <li>
+                        <a name="@Model.ParentGroup.Name" href="/Groups/@Model.ParentGroup.Id/@Model.ParentGroup.Name">
+                            @Model.ParentGroup.Name
+                        </a>
+                    </li>
+                    @Addoption(Model.ParentGroup.Id)
+                </ul>
+            </div>
+
+        </aside>
+        <div id="content" class="col-sm-9">
+            <!-- Slideshow Start-->
+            <div class="slideshow single-slider owl-carousel">
+                <div class="item"> <a href="#"><img class="img-responsive" src="@Url.Content("~/Content/Shop/image/slider/banner-1.jpg")" alt="banner 1" /></a> </div>
+                <div class="item"> <a href="#"><img class="img-responsive" src="@Url.Content("~/Content/Shop/image/slider/banner-2.jpg")" alt="banner 2" /></a> </div>
+                <div class="item"> <a href="#"><img class="img-responsive" src="@Url.Content("~/Content/Shop/image/slider/banner-3.jpg")" alt="banner 3" /></a> </div>
+            </div>
+            <h3 class="subtitle">@Model.ParentGroup.Name</h3>
+            <div class="owl-carousel product_carousel">
+                @if (Model.Groups.Any())
+                {
+                    foreach (var item in Model.Products)
+                    {
+                        <div class="product-thumb clearfix">
+                            <div class="image">
+                                <a href="~/Home/Product/@item.Url">
+                                    @Html.ImageFor(ModeItem => item.Image, new { width = "150" }, "no_image.jpg", "Files", "UploadImage")
+                                </a>
+                            </div>
+                            <div class="caption">
+                                <h4><a href="~/Home/Product/@item.Url">@item.Name</a></h4>
+                                <p class="price"><span class="price-new">@item.Price.ToPrice() تومان</span>@*<span class="price-old">122000 تومان</span><span class="saving">-10%</span>*@</p>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn-primary" type="button" product="@item.Id"><span>افزودن به سبد</span></button>
+                                <div class="add-to-links">
+                                    <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی ها" onclick=""><i class="fa fa-heart"></i></button>
+                                    <button type="button" data-toggle="tooltip" title="مقایسه" onclick=""><i class="fa fa-exchange"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+            <!-- Featured محصولات End-->
+            <!-- Banner Start-->
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="banner owl-carousel">
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-1-400x200.jpg")" alt="small banner" class="img-responsive" /></a> </div>
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-2-400x200.jpg")" alt="small banner1" class="img-responsive" /></a> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="banner owl-carousel">
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-2-400x200.jpg")" alt="small banner" class="img-responsive" /></a> </div>
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-3-400x200.jpg")" alt="small banner1" class="img-responsive" /></a> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="banner owl-carousel">
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-3-400x200.jpg")" alt="small banner" class="img-responsive" /></a> </div>
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-1-400x200.jpg")" alt="small banner1" class="img-responsive" /></a> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="banner owl-carousel">
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-4-400x150.jpg")" alt="small banner" class="img-responsive" /></a> </div>
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-3-400x200.jpg")" alt="small banner1" class="img-responsive" /></a> </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="banner owl-carousel">
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-5-400x150.jpg")" alt="small banner" class="img-responsive" /></a> </div>
+                        <div class="item"> <a href="#"><img src="@Url.Content("~/Content/Shop/image/banner/sample-banner-1-400x200.jpg")" alt="small banner1" class="img-responsive" /></a> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("button.btn-primary").click(function (e) {
+                e.preventDefault();
+                var productId = $(this).attr("product");
+                $.ajax({
+                    url: "/Home/AddToCart",
+                    data: { Id: productId, Count: 1 },
+                    type: "Post",
+                    dataType: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            $("#CartItems").html(result.Html);
+                        }
+                        eval(result.Script);
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            });
+        });
+    </script>
+}

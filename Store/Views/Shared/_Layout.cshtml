@@ -1,0 +1,594 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="image/favicon.png" rel="icon" />
+    <title>فروشگاه اینترنتی دیجی شاپ</title>
+    <meta name="description" content="Responsive and clean html template design for any kind of ecommerce webshop">
+    <!-- CSS Part Start-->
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/js/bootstrap/css/bootstrap.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/js/bootstrap/css/bootstrap-rtl.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/font-awesome/css/font-awesome.min.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/stylesheet.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/owl.carousel.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/owl.transitions.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/responsive.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/stylesheet-rtl.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Shop/css/responsive-rtl.css")" />
+    <style>
+        .mybutton {
+            background-color: #ff6a00;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: 'B Vahid' padding: 15px 36px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .mycart {
+            background-color: #ff6a00;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-family: 'B Vahid' padding: 15px 15px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
+
+    @RenderSection("styles", false)
+    <!-- CSS Part End-->
+</head>
+<body>
+    <div class="wrapper-wide">
+        <div id="header">
+            <!-- Header Start-->
+            <div class="htop" style="background-color: whitesmoke; height: 40px; ">
+                <div class="container" style="font-family:'B Bardiya';color:darkslategray">
+
+                    <div>
+
+                        <div class="col-table-cell col-lg-2 col-md-2 col-sm-6 col-xs-6 inner">
+
+                            <a href="@Url.Content("~/Home/Index")">  <h4>فروشگاه اینترنتی دیجی شاپ</h4> </a>
+                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-6 inner">
+                                <a href="@Url.Content("~/Home/Profile")"><h4>@User.Identity.Name<img src="@Url.Content("~/Content/Shop/image/login.png")" title="DigiShop" alt="DigiShop"></h4></a>
+                            </div>
+                            <div class="col-table-cell col-lg-1 col-md-1 col-md-3 col-xs-6 inner">
+                                <a href="@Url.Content("~/Home/Logout")"><h4>خروج<img src="@Url.Content("~/Content/Shop/image/logout.png")" title="DigiShop" alt="DigiShop"></h4></a>
+                            </div>
+                        }
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-table-cell col-lg-1 col-md-1 col-sm-12 col-xs-12 inner">
+                                <a href="@Url.Content("~/Home/Login")"><h4>ورود<img src="@Url.Content("~/Content/Shop/image/login.png")" title="DigiShop" alt="DigiShop"></h4></a>
+                            </div>
+
+                            <div class="col-table-cell col-lg-6 col-md-6 col-sm-6 col-xs-6 inner">
+                                <a href="@Url.Content("~/Home/Register")"><h4>ثبت نام<img src="@Url.Content("~/Content/Shop/image/Register.png")" title="DigiShop" alt="DigiShop"></h4></a>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+
+
+                <header>
+                    <div class="container" style="height:40px">
+
+                        <div class="table-container">
+                            <!--start سبد خرید button-->
+
+                            <div class="col-table-cell col-lg-2 col-md-2 col-sm-6 col-xs-6 inner">
+                                <a href="~/Home/Basket" class=" roundedimage"><img src="@Url.Content("~/Content/Shop/image/digishop.png")" title="DigiShop" alt="DigiShop"> </a>
+                                <a id="CartItems" class="mybutton" href="~/Home/Basket"> لیست خرید (@{ Html.RenderAction("CartCount", "Home"); }) </a>
+
+                            </div>
+
+                            <!--end سبد خرید  button-->
+                            <!-- جستجو Start-->
+                            <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
+                                <div id="search" class="input-group">
+                                    <input id="filter_name" type="text" name="search" value="" placeholder="جستجو" class="form-control input-lg" />
+                                    <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <!-- جستجو End-->
+                            <!--start logo-->
+                            <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner a">
+                                <div id="logo">
+                                    <a href="@Url.Content("~/Home/Index")">
+                                        <img src="@Url.Content("~/Content/Shop/image/logo.png")" title="DigiShop" alt="DigiShop" align="left" height="80">
+                                    </a>
+                                </div>
+                            </div>
+                            <!--end logo-->
+
+                        </div>
+                    </div>
+
+                </header>
+                <!-- Header End-->
+                <!-- Main آقایانu Start-->
+                <div class="container">
+                    <div class="header-row">
+                        <nav id="menu" class="navbar" style="background-color: #ddfbf5">
+                            <div class="navbar-header"> <span class="visible-xs visible-sm"> منو <b></b></span></div>
+                            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li><a class="home_link" title="خانه" href="index.html"><span>خانه</span></a></li>
+                                    <!--*************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">البسه</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="category.html">آقایان <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته ها</a></li>
+                                                                    <li><a href="category.html">زیردسته ها</a></li>
+                                                                    <li><a href="category.html">زیردسته ها</a></li>
+                                                                    <li><a href="category.html">زیردسته ها</a></li>
+                                                                    <li><a href="category.html">زیردسته جدید</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li><a href="category.html">بانوان</a> </li>
+                                                        <li>
+                                                            <a href="category.html">دخترانه<span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته ها </a></li>
+                                                                    <li><a href="category.html">زیردسته جدید</a></li>
+                                                                    <li><a href="category.html">زیردسته جدید</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li><a href="category.html">پسرانه</a></li>
+                                                        <li><a href="category.html">نوزاد</a></li>
+                                                        <li>
+                                                            <a href="category.html">لوازم <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته های جدید</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">الکترونیکی</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="category.html">لپ تاپ <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li> <a href="category.html">زیردسته های جدید </a> </li>
+                                                                    <li> <a href="category.html">زیردسته های جدید </a> </li>
+                                                                    <li> <a href="category.html">زیردسته جدید </a> </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category.html">رومیزی <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li> <a href="category.html">زیردسته های جدید </a> </li>
+                                                                    <li> <a href="category.html">زیردسته جدید </a> </li>
+                                                                    <li> <a href="category.html">زیردسته جدید </a> </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category.html">دوربین <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li> <a href="category.html">زیردسته های جدید</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category.html">موبایل و تبلت <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته های جدید</a></li>
+                                                                    <li><a href="category.html">زیردسته های جدید</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="category.html">صوتی و تصویری <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته های جدید </a> </li>
+                                                                    <li><a href="category.html">زیردسته جدید </a> </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li><a href="category.html">لوازم خانگی</a> </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">کفش</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">آقایان</a> </li>
+                                                        <li>
+                                                            <a href="category.html">بانوان <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته های جدید </a> </li>
+                                                                    <li><a href="category.html">زیردسته ها </a> </li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        <li><a href="category.html">دخترانه</a> </li>
+                                                        <li><a href="category.html">پسرانه</a> </li>
+                                                        <li><a href="category.html">نوزاد</a> </li>
+                                                        <li>
+                                                            <a href="category.html">لوازم <span>&rsaquo;</span></a>
+                                                            <div class="dropdown-menu">
+                                                                <ul>
+                                                                    <li><a href="category.html">زیردسته های جدید</a></li>
+                                                                    <li><a href="category.html">زیردسته های جدید</a></li>
+                                                                    <li><a href="category.html">زیردسته ها</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">ساعت</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li> <a href="category.html">ساعت مردانه</a></li>
+                                                        <li> <a href="category.html">ساعت زنانه</a></li>
+                                                        <li> <a href="category.html">ساعت بچگانه</a></li>
+                                                        <li> <a href="category.html">لوازم</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">جواهرات</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">نقره</a></li>
+                                                        <li><a href="category.html">طلا</a></li>
+                                                        <li><a href="category.html">الماس</a></li>
+                                                        <li><a href="category.html">زیورآلات آقایان</a></li>
+                                                        <li><a href="category.html">زیورآلات کودکان </a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">زیبایی و سلامت</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li> <a href="category.html">عطر و ادکلن</a></li>
+                                                        <li> <a href="category.html">آرایشی</a></li>
+                                                        <li> <a href="category.html">ضد آفتاب</a></li>
+                                                        <li> <a href="category.html">مراقبت از پوست</a></li>
+                                                        <li> <a href="category.html">مراقبت از چشم</a></li>
+                                                        <li> <a href="category.html">مراقبت از مو</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">کودک و نوزاد</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">اسباب بازی</a></li>
+                                                        <li><a href="category.html">پازل</a></li>
+                                                        <li><a href="category.html">سرگرمی</a></li>
+                                                        <li><a href="category.html">متنوع</a></li>
+                                                        <li><a href="category.html">سلامت و امنیت</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">ورزشی</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">دوچرخه سواری</a></li>
+                                                        <li><a href="category.html">دویدن</a></li>
+                                                        <li><a href="category.html">شنا</a></li>
+                                                        <li><a href="category.html">فوتبال</a></li>
+                                                        <li><a href="category.html">گلف</a></li>
+                                                        <li><a href="category.html">موج سواری</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">خانه و باغچه</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">لوازم خواب</a></li>
+                                                        <li><a href="category.html">خوراک</a></li>
+                                                        <li><a href="category.html">لوازم منزل</a></li>
+                                                        <li><a href="category.html">آشپزخانه</a></li>
+                                                        <li><a href="category.html">روشنایی</a></li>
+                                                        <li><a href="category.html">ابزارها</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+                                    <!--**************************************************-->
+                                    <li class="mega-menu dropdown">
+                                        <a href="category.html">خوراک</a>
+                                        <div class="dropdown-menu">
+                                            <div class="column col-lg-2 col-md-3">
+
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="category.html">نوشیدنی</a></li>
+                                                        <li><a href="category.html">تنقلات</a></li>
+                                                        <li><a href="category.html">میان وعده</a></li>
+                                                        <li><a href="category.html">خشک بار</a></li>
+                                                        <li><a href="category.html">شکلات</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--**************************************************-->
+
+                                    <li class="contact-link"><a href="contact-us.html">تماس با ما</a></li>
+                                    <li class="custom-link-right"><a href="#" target="_blank"> همین حالا بخرید!</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <br />
+                        <!-- Feature Box Start-->
+                        <div class="custom-feature-box row">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="feature-box fbox_1">
+                                    <div class="title">ارسال رایگان</div>
+                                    <p>برای خرید های بیش از 100 هزار تومان</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="feature-box fbox_2">
+                                    <div class="title">پس فرستادن رایگان</div>
+                                    <p>بازگشت کالا تا 24 ساعت پس از خرید</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="feature-box fbox_3">
+                                    <div class="title">کارت هدیه</div>
+                                    <p>بهترین هدیه برای عزیزان شما</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="feature-box fbox_4">
+                                    <div class="title">امتیازات خرید</div>
+                                    <p>از هر خرید امتیاز کسب کرده و از آن بهره بگیرید</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Feature Box End-->
+                    </div>
+                </div>
+                <!-- Main آقایانu End-->
+            </div>
+
+            <div id="container">
+                <div class="container">
+                    <div class="row">
+                        <!--Middle Part Start-->
+                        <div id="content" class="col-sm-12">
+                            @RenderBody()
+                            <div class="buttons text-center"></div>
+                        </div>
+                        <!--Middle Part End -->
+                    </div>
+                </div>
+            </div>
+            <!--Footer Start-->
+            <footer id="footer">
+                <div class="fpart-first">
+                    <div class="container">
+                        <div class="row">
+                            <div class="contact col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <h5>اطلاعات تماس</h5>
+                                <ul>
+                                    <li class="address"><i class="fa fa-map-marker"></i>تبریز،خیابان امام،بازار کبود،فاز2 واحد 238</li>
+                                    <li class="mobile"><i class="fa fa-phone"></i>09145354735</li>
+                                    <li class="email"><i class="fa fa-envelope"></i>برقراری ارتباط از طریق <a href="@Url.Content("~/Home/contact-us")">تماس با ما</a>
+                                </ul>
+                            </div>
+                            <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <h5>اطلاعات</h5>
+                                <ul>
+                                    <li><a href="@Url.Content("~/Home/about-us")">درباره ما</a></li>
+                                    <li><a href="@Url.Content("~/Home/about-us")">اطلاعات ارسال</a></li>
+                                    <li><a href="@Url.Content("~/Home/about-us")">حریم خصوصی</a></li>
+                                    <li><a href="@Url.Content("~/Home/about-us")">شرایط و قوانین</a></li>
+                                </ul>
+                            </div>
+                            <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <h5>خدمات مشتریان</h5>
+                                <ul>
+                                    <li><a href="@Url.Content("~/Home/contact-us")">تماس با ما</a></li>
+                                    <li><a href="@Url.Content("~/Home/Index")">بازگشت</a></li>
+                                    <li><a href="@Url.Content("~/Home/Sitemap")">نقشه سایت</a></li>
+                                </ul>
+                            </div>
+                            <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <h5>امکانات جانبی</h5>
+                                <ul>
+                                    <li><a href="#">برند ها</a></li>
+                                    <li><a href="#">کارت هدیه</a></li>
+                                    <li><a href="#">بازاریابی</a></li>
+                                    <li><a href="#">ویژه ها</a></li>
+                                </ul>
+                            </div>
+                            <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                <h5>حساب من</h5>
+                                <ul>
+                                    <li><a href="#">حساب کاربری</a></li>
+                                    <li><a href="#">تاریخچه سفارشات</a></li>
+                                    <li><a href="#">لیست علاقه مندی</a></li>
+                                    <li><a href="#">خبرنامه</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fpart-second">
+                    <div class="container">
+                        <div id="powered" class="clearfix">
+
+                            <div class="powered_text pull-left flip">
+                                <p>کپی رایت © 2017 فروشگاه اینترنتی دیجی شاپ | خرید ایمن تنها با یک کلیک </p>
+                                <p> طراحی سریع وب با<a href="https://mrcode.ir" target="_blank">آوا وب</a> </p>
+                            </div>
+                            <div class="social pull-right flip"> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/socialicons/facebook.png")" alt="Facebook" title="Facebook"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/socialicons/twitter.png")" alt="Twitter" title="Twitter"> </a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/socialicons/google_plus.png")" alt="Google+" title="Google+"> </a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/socialicons/pinterest.png")" alt="Pinterest" title="Pinterest"> </a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/socialicons/rss.png")" alt="RSS" title="RSS"> </a> </div>
+                        </div>
+                        <div class="bottom-row">
+                            <div class="custom-text text-center">
+                                <h4>فروشگاه اینترنتی دیجی شاپ، بررسی، انتخاب و خرید آنلاین</h4>
+                                <p>
+                                    دیجی‌شاپ بزرگ‌ترین فروشگاه اینترنتی کشور، اینک در آستانه‌ی دهمین سال فعالیت، با گستره‌ای از کالاهای متنوع برای تمام اقشار جامعه و هر رده‌ی سنی، برای کاربران خود «تجربه‌ی لذت‌بخش یک خرید اینترنتی» را تداعی می‌کند. «ارسال سریع»، «ضمانت بهترین قیمت» و «تضمین اصل بودن کالا» سه اصل اولیه است که دیجی‌شاپ از نخستین روز تاسیس سعی کرده به آن پایبند باشد و با رعایت این سه اصل، هرسال، حوزه‌های تازه‌ای را در فروش کالا و خدمات، به دایره‌ی فعالیت خود افزوده است. گستره‌ای به وسعت کالای دیجیتال (موبایل، تبلت و کتابخوان‌ها، لپ‌تاپ، کامپیوتر و لوازم جانبی، دوربین، صوتی و تصویری، ماشین‌های اداری و لوازم جانبی کالای دیجیتال)، لوازم خانگی (لوازم برقی، آشپزخانه، سرو و پذیرایی، دکوراتیو، خواب و حمام، شست‌وشو و نظافت و ابزار)، زیبایی و سلامت (عطر، لوازم آرایشی، لوازم بهداشتی، لوازم شخصی برقی، ساعت، زیورآلات، ابزار سلامت)، فرهنگ و هنر (کتاب و مجلات، لوازم‌تحریر، صنایع دستی، آلات موسیقی، موسیقی، فیلم، نرم افزار و بازی و محتوای آموزشی) و ورزش و سرگرمی (لوازم ورزشی، اسباب بازی، تجهیزات سفر و کفش ورزشی)؛ از برندهای متنوع، متعدد و سرشناس جهانی همچون اپل، سونی، سامسونگ، ال‌جی، اچ‌پی، کانن، بوش، نایک، آدیداس، نیوا و ... دیجی‌شاپ، یک دهه پس از آغاز فعالیت، با داشتن مراکز توزیع در استان تهران، امکان تحویل کالا را به‌صورت رایگان (در مورد خریدهای بیش از صدهزارتومان) در همان روز ثبت سفارش فراهم کرده است.
+                                </p>
+                            </div>
+                            <div class="payments_types"> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_paypal.png")" alt="paypal" title="PayPal"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_american.png")" alt="american-express" title="American Express"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_2checkout.png")" alt="2checkout" title="2checkout"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_maestro.png")" alt="maestro" title="Maestro"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_discover.png")" alt="discover" title="Discover"></a> <a href="#" target="_blank"> <img data-toggle="tooltip" src="@Url.Content("~/Content/Shop/image/payment/payment_mastercard.png")" alt="mastercard" title="MasterCard"></a> </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="back-top"><a data-toggle="tooltip" title="بازگشت به بالا" href="javascript:void(0)" class="backtotop"><i class="fa fa-chevron-up"></i></a></div>
+            </footer>
+            <!--Footer End-->
+            <!-- Facebook Side Block Start -->
+            <div id="facebook" class="fb-left sort-order-1">
+                <div class="facebook_icon"><i class="fa fa-facebook"></i></div>
+                <div class="fb-page" data-href="https://www.facebook.com/harnishdesign/" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="false">
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/harnishdesign/"><a href="https://www.facebook.com/harnishdesign/">هارنیش دیزاین</a></blockquote>
+                    </div>
+                </div>
+                <div id="fb-root"></div>
+                <script>
+                    (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+            </div>
+            <div id="twitter_footer" class="twit-left sort-order-2">
+                <div class="twitter_icon"><i class="fa fa-twitter"></i></div>
+                <a class="twitter-timeline" href="https://twitter.com/" data-chrome="nofooter noscrollbar transparent" data-theme="light" data-tweet-limit="2" data-related="twitterapi,twitter" data-aria-polite="assertive" data-widget-id="347621595801608192">توییت های ></a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            </div>
+            <div id="video_box" class="vb-left sort-order-3">
+                <div id="video_box_icon"><i class="fa fa-play"></i></div>
+                <p>
+                    <iframe src="@Url.Content("~/Content/Shop///www.youtube.com/embed/SZEflIVnhH8")" height="315" width="560"></iframe>
+                </p>
+            </div>
+            <div id="custom_side_block" class="custom_side_block_left sort-order-4">
+                <div class="custom_side_block_icon"> <i class="fa fa-chevron-right"></i> </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><h2>بلاک های محتوا</h2></td>
+                        </tr>
+                        <tr>
+                            @* <td><img alt="" src="@Url.Content("~/Content/Shop/image/banner/cms-block.jpg")"></td>*@
+                        </tr>
+                        <tr>
+                            <td>محتوای دلخواه خود را به این بخش اضافه کنید.</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="#">ادامه مطلب</a></strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Custom Side Block End -->
+        </div>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/jquery-2.1.1.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/bootstrap/js/bootstrap.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/jquery.easing-1.3.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/jquery.dcjqaccordion.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/owl.carousel.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/Shop/js/custom.js")"></script>
+        @RenderSection("scripts", false)
+</body>
+</html>

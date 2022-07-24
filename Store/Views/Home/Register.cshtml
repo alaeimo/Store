@@ -1,0 +1,142 @@
+﻿@model Store.Models.DomainModels.User
+
+@{
+    ViewBag.Title = "ثبت نام";
+}
+<!-- Breadcrumb Start-->
+
+
+
+<div class="col-sm-9" id="content">
+
+    <!-- Breadcrumb End-->
+    <h2 class="title">فرم ثبت نام</h2>
+    <p>اگر قبلا حساب کاربریتان را ایجاد کرد اید جهت ورود به  @Html.ActionLink("صفحه ورود ", "Login")مراجعه کنید .</p>
+    @using (Ajax.BeginForm("Register", "Home", new AjaxOptions { HttpMethod = "Post", Url = "Home/Register" }))
+    {
+        <form class="form-horizontal">
+            <fieldset id="account">
+                <legend>اطلاعات شخصی شما</legend>
+                <div style="display: none;" class="form-group required">
+                    <label class="col-sm-2 control-label">گروه مشتری</label>
+                    <div class="col-sm-10">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" checked="checked" value="1" name="customer_group_id">
+                                پیشفرض
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="input-firstname" class="col-sm-2 control-label">نام و نام خانوادگی</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="input-firstname" placeholder="نام و نام خانوادگی" value="" name="Name">
+                        @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="input-email" class="col-sm-2 control-label">نام کاربری</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="input-email" placeholder="آدرس ایمیل" value="" name="Username">
+                        @Html.ValidationMessageFor(model => model.Username, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label for="input-firstname" class="col-sm-2 control-label">تاریخ تولد</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"  placeholder="تاریخ تولد" value="" name="BirthDate">
+                        @Html.ValidationMessageFor(model => model.BirthDate, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="input-telephone" class="col-sm-2 control-label">شماره موبایل</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control"  placeholder="شماره موبایل" value="" name="Mobile">
+                        @Html.ValidationMessageFor(model => model.Mobile, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="input-telephone" class="col-sm-2 control-label">شماره تلفن</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" id="input-telephone" placeholder="شماره تلفن" value="" name="Tell">
+                        @Html.ValidationMessageFor(model => model.Tell, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <fieldset>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label">جنسیت</label>
+                        <div class="col-sm-10">
+                            <label class="radio-inline">
+                                <input type="radio" checked="checked" value="true" name="Gender">
+                                آقا
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" value="false" name="Gender">
+                                خانم
+                            </label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Gender, null, new { style = "color:orange" })
+                    </div>
+                </fieldset>
+            </fieldset>
+            <fieldset id="address">
+                <legend>آدرس</legend>
+                <div class="form-group required">
+                    <label for="input-address-1" class="col-sm-2 control-label">آدرس</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="input-address-1" placeholder="آدرس " value="" name="Address">
+                        @Html.ValidationMessageFor(model => model.Address, null, new { style = "color:orange" })
+                     </div>
+                </div>
+                <div class="form-group required">
+                    <label for="input-postcode" class="col-sm-2 control-label">کد پستی</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="input-postcode" placeholder="کد پستی" value="" name="PostalCode">
+                        @Html.ValidationMessageFor(model => model.PostalCode, null, new { style = "color:orange" })
+                     </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>رمز عبور شما</legend>
+                <div class="form-group required">
+                    <label for="input-password" class="col-sm-2 control-label">رمز عبور</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="input-password" placeholder="رمز عبور" value="" name="Password">
+                        @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:orange" })
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="input-confirm" class="col-sm-2 control-label">تکرار رمز عبور</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="input-confirm" placeholder="تکرار رمز عبور" value="" name="ConfirmPassword">
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { style = "color:orange" })
+                     </div>
+                </div>
+            </fieldset>
+            <div class="separator"></div>
+            <div class="buttons">
+                <div class="pull-right">
+                    <input type="checkbox" value="1" name="agree">
+                    &nbsp;من <a class="agree" href="#"><b>سیاست حریم خصوصی</b> را خوانده ام و با آن موافق هستم</a> &nbsp;
+                    <input type="submit" class="btn btn-primary" value="ادامه">
+                </div>
+            </div>
+            <div class="label-success" style="text-align:center">
+                @ViewBag.Success
+            </div>
+            <div class="label-warning" style="text-align:center">
+                @ViewBag.Warning
+            </div>
+            <div class="label-danger" style="text-align:center">
+                @ViewBag.Error
+            </div>
+        </form>
+    }
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
