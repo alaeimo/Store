@@ -1,4 +1,4 @@
-![alt text](https://github.com/alaeimo/Store/blob/master/demo.jpg)
+![alt text](https://github.com/alaeimo/Store/blob/master/demo.png)
 
 # What is this?
 
